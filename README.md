@@ -1,33 +1,60 @@
-# DB-AI - Database Management Interface
+# DB-AI - Desktop Database Management Application
 
-A modern, intuitive Next.js application for MongoDB database exploration and management. Built with React 19, TypeScript, and Tailwind CSS, featuring a sleek glass-morphism UI design.
+A modern, cross-platform desktop application for MongoDB database exploration and management. Built with Electron, Next.js, React 19, TypeScript, and Tailwind CSS, featuring a sleek glass-morphism UI design.
 
 ## 🚀 Features
 
+### Database Management
 - **Interactive Database Explorer** - Browse collections and documents with ease
 - **Query Editor** - Execute MongoDB queries with syntax highlighting
 - **Data Visualization** - Real-time charts and analytics
-- **Modern UI** - Glass-morphism design with smooth animations
-- **Responsive Design** - Works seamlessly across all devices
+- **Schema Browser** - Explore database structure and relationships
+- **Export/Import** - Data export and import capabilities
+
+### Desktop Experience
+- **Native Desktop App** - Cross-platform support (Windows, macOS, Linux)
+- **Native Menus** - Platform-specific menu integration
+- **Keyboard Shortcuts** - Productivity-focused shortcuts
+- **Auto-Updates** - Seamless application updates
+- **Offline Capable** - Works without internet connection
+
+### Modern UI/UX
+- **Glass-morphism Design** - Modern, elegant interface
+- **Dark/Light Themes** - Adaptive theming support
+- **Responsive Layout** - Optimized for different screen sizes
+- **Smooth Animations** - Fluid user interactions
 - **TypeScript Support** - Full type safety throughout the application
 
 ## 🛠️ Tech Stack
 
+### Frontend
 - **Framework**: Next.js 15.4.6 with App Router
 - **Language**: TypeScript 5
 - **Styling**: Tailwind CSS 4
 - **Icons**: Heroicons React
 - **Runtime**: React 19.1.0
 
-## 📦 Installation
+### Desktop
+- **Desktop Framework**: Electron 37.2.6
+- **Build Tool**: Electron Builder 26.0.12
+- **Auto-Updates**: Electron Updater 6.6.2
+- **Process Management**: Concurrently, Wait-on
 
-1. Clone the repository:
+## 📦 Installation & Setup
+
+### Prerequisites
+- Node.js 18+
+- npm, yarn, or pnpm
+
+### Development Setup
+
+1. **Clone the repository:**
 ```bash
-git clone https://github.com/yourusername/db-ai.git
+git clone https://github.com/Dipendra-creator/db-ai.git
 cd db-ai
 ```
 
-2. Install dependencies:
+2. **Install dependencies:**
 ```bash
 npm install
 # or
@@ -36,16 +63,33 @@ yarn install
 pnpm install
 ```
 
-3. Run the development server:
+3. **Run in development mode:**
+
+**Web Version:**
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+# Opens at http://localhost:9961
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+**Desktop Version:**
+```bash
+npm run electron-dev
+# Launches desktop app with hot reload
+```
+
+### Production Build
+
+**Build for Web:**
+```bash
+npm run build
+npm run start
+```
+
+**Build Desktop Application:**
+```bash
+npm run electron-pack
+# Creates distributables in /dist folder
+```
 
 ## 🏗️ Project Structure
 
@@ -62,7 +106,13 @@ db-ai/
 │       ├── MainContent.tsx
 │       ├── Sidebar.tsx
 │       └── theme-provider.tsx
+├── electron/                # Electron main process
+│   ├── main.js             # Main Electron process
+│   └── preload.js          # Preload script (security)
 ├── public/                  # Static assets
+├── assets/                  # Application icons
+├── out/                     # Next.js build output
+├── dist/                    # Electron distributables
 ├── next.config.ts          # Next.js configuration
 ├── tailwind.config.js      # Tailwind CSS configuration
 ├── tsconfig.json           # TypeScript configuration
@@ -71,19 +121,39 @@ db-ai/
 
 ## 🎨 UI Components
 
+### Core Components
 - **Sidebar**: Navigation and database connection management
 - **MainContent**: Query editor and results display
 - **DataVisualization**: Charts and analytics dashboard
 - **ConnectionManager**: Database connection configuration
 
+### Desktop Features
+- **Native Menus**: Platform-specific application menus
+- **Window Management**: Minimize, maximize, close controls
+- **Keyboard Shortcuts**: Productivity shortcuts
+- **System Integration**: Tray icons, notifications
+
 ## 🔧 Development
 
 ### Available Scripts
 
-- `npm run dev` - Start development server with Turbopack
-- `npm run build` - Build for production
-- `npm run start` - Start production server
+**Development:**
+- `npm run dev` - Start Next.js development server (port 9961)
+- `npm run electron-dev` - Start desktop app in development mode
 - `npm run lint` - Run ESLint
+
+**Production:**
+- `npm run build` - Build Next.js application
+- `npm run export` - Export static files
+- `npm run electron-pack` - Build desktop distributables
+- `npm run start` - Start production server
+
+### Desktop Development
+
+The desktop application uses:
+- **Main Process** (`electron/main.js`): Window management, menus, system integration
+- **Preload Script** (`electron/preload.js`): Secure IPC communication
+- **Renderer Process**: Next.js application running in Electron
 
 ### Code Style
 
@@ -92,20 +162,61 @@ This project uses:
 - ESLint for code linting
 - Tailwind CSS for styling
 - Modern React patterns with hooks
+- Electron security best practices
 
 ## 🚀 Deployment
 
-The application can be deployed on various platforms:
-
+### Web Deployment
 - **Vercel** (Recommended): Deploy with zero configuration
 - **Netlify**: Static site deployment
 - **Docker**: Containerized deployment
 
-### Deploy on Vercel
+### Desktop Distribution
 
-The easiest way to deploy is using the [Vercel Platform](https://vercel.com/new):
+**Automatic Building:**
+```bash
+npm run electron-pack
+```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/db-ai)
+**Platform-specific builds:**
+- **Windows**: Creates `.exe` installer (NSIS)
+- **macOS**: Creates `.dmg` disk image
+- **Linux**: Creates `.AppImage` portable app
+
+**Distribution Channels:**
+- GitHub Releases (with auto-updates)
+- Microsoft Store (Windows)
+- Mac App Store (macOS)
+- Snap Store (Linux)
+
+### Deploy Web Version on Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Dipendra-creator/db-ai)
+
+## ⌨️ Keyboard Shortcuts
+
+### Global Shortcuts
+- `Ctrl/Cmd + N` - New Connection
+- `Ctrl/Cmd + O` - Open Query
+- `Ctrl/Cmd + S` - Save Query
+- `Ctrl/Cmd + E` - Export Data
+- `F5` - Refresh Schema
+- `Ctrl/Cmd + Shift + C` - Connect to Database
+- `Ctrl/Cmd + Shift + D` - Disconnect
+
+### Development Shortcuts
+- `Ctrl/Cmd + Shift + I` - Toggle Developer Tools
+- `Ctrl/Cmd + R` - Reload Application
+- `F11` - Toggle Fullscreen
+
+## 🔒 Security
+
+The desktop application implements Electron security best practices:
+- **Context Isolation**: Enabled for all renderer processes
+- **Node Integration**: Disabled in renderer processes
+- **Preload Scripts**: Secure IPC communication
+- **CSP Headers**: Content Security Policy implementation
+- **URL Validation**: External link protection
 
 ## 📝 License
 
@@ -125,6 +236,13 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 If you have any questions or need help, please open an issue on GitHub.
 
+## 🏆 Acknowledgments
+
+- [Electron](https://electronjs.org/) - Desktop application framework
+- [Next.js](https://nextjs.org/) - React framework
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Heroicons](https://heroicons.com/) - Beautiful hand-crafted SVG icons
+
 ---
 
-Built with ❤️ using Next.js and modern web technologies.
+Built with ❤️ using Electron, Next.js, and modern web technologies.
